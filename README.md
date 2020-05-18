@@ -35,12 +35,55 @@ Source file is found at
 rows. earliest date found is: 2011-09-22 22:29:24 and latest 2013-10-14
 00:46:22.
 
-I’ve added the files as rds, fst and sqlite database file. Because
+I’ve added the files as rds, fst, csv, and sqlite database file. Because
 github is not a file storage, there is a limit and it probably doesn’t
-like uploading 800mb files.
+like uploading 800mb files. Even zipped the csv is too big.
 
 I’ve put the files on the open science framework:
 <https://osf.io/cphtu/>
+
+### How can I get the files?
+
+You can either download and extract yourself Or download the files from
+OSF by going to the link above, or use the package {osfr} created by
+[the many great people at Ropensci]()
+
+``` r
+library(osfr)
+```
+
+    ## Automatically registered OSF personal access token
+
+``` r
+link <- "https://osf.io/cphtu/" # I created it manually.
+project <- osf_retrieve_node(link)
+data_files <- osf_ls_files(project,path = "data")
+data_files
+```
+
+    ## # A tibble: 5 x 3
+    ##   name          id                       meta            
+    ##   <chr>         <chr>                    <list>          
+    ## 1 data_clean    5ec2d790edc58c002d0aadef <named list [3]>
+    ## 2 data_raw      5ec2d792edc58c002d0aadf5 <named list [3]>
+    ## 3 scihub.fst    5ec2da85edc58c002d0ab12f <named list [3]>
+    ## 4 scihub.rds    5ec2db72c7d4ab002621caa1 <named list [3]>
+    ## 5 scihub.sqlite 5ec2dc5aedc58c002e0ac261 <named list [3]>
+
+``` r
+# download the fst format
+# I'm assuming you created a data folder
+osf_download(data_files[,3], path="data/")
+```
+
+### Supersimple overview of the data
+
+When data gets into the millions of rows I often switch to a database.
+Databases were designed to deal with lots of data. If you are using
+tidyverse you can use almost all of your dplyr stuff on the database,
+and it happens automatically. You only need to create a connection and
+tbl object. (But the praises of a database are not why you came to this
+page). In this case I created a sqlite database.
 
 ``` r
 library(DBI)

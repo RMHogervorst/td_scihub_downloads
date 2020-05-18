@@ -38,18 +38,49 @@ Source file is found at <http://sci-hub.se/downloads/ancient.sci-hub.stats.7z> o
 It is a massive dataset of 4.728.537 rows. 
 earliest date found is: 2011-09-22 22:29:24 and latest 2013-10-14 00:46:22.
 
-I've added the files as rds, fst and sqlite database file.
-Because github is not a file storage, there is a limit and it probably doesn't like uploading 800mb files.
+I've added the files as rds, fst, csv, and sqlite database file.
+Because github is not a file storage, there is a limit and it probably doesn't like uploading 800mb files. Even zipped the csv is too big. 
 
-I've put the files on the open science framework: <https://osf.io/cphtu/>       
+I've put the files on the open science framework: <https://osf.io/cphtu/> 
 
+### How can I get the files?
+
+You can either download and extract yourself
+Or download the files from OSF by going to the link above, or 
+use the package {osfr} created by [the many great people at Ropensci]()
+
+
+```{r}
+library(osfr)
+link <- "https://osf.io/cphtu/" # I created it manually.
+project <- osf_retrieve_node(link)
+data_files <- osf_ls_files(project,path = "data")
+data_files
+```
+
+
+```{r, eval=FALSE}
+# download the fst format
+# I'm assuming you created a data folder
+osf_download(data_files[,3], path="data/")
+```
+
+
+
+### Supersimple overview of the data
+
+When data gets into the millions of rows I often switch to a database. Databases
+were designed to deal with lots of data. If you are using tidyverse you can use
+almost all of your dplyr stuff on the database, and it happens automatically. 
+You only need to create a connection and tbl object. (But the praises of a database
+are not why you came to this page).
+In this case I created a sqlite database. 
 
 ```{r}
 library(DBI)
 library(tidyverse)
 library(dbplyr)
 ```
-
 
 
 ```{r}
