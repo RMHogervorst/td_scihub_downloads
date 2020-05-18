@@ -47,7 +47,7 @@ I've put the files on the open science framework: <https://osf.io/cphtu/>
 
 You can either download and extract yourself
 Or download the files from OSF by going to the link above, or 
-use the package {osfr} created by [the many great people at Ropensci]()
+use the package {osfr} created by [the many great people at Ropensci](ropensci.org)
 
 
 ```{r}

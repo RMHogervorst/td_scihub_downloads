@@ -9,4 +9,4 @@ project <- osf_retrieve_node(link)
 # awesome tool. But I did not, so I had to fight it a bit.
 data_file  <- osf_upload(project, path = list.files(pattern = "scihub*", recursive = TRUE))
 r_files <- osf_upload(project, path = "R/")
-osf_upload(project, path = c("README.md","README.Rmd"))
+osf_upload(project, path = c("README.md","README.Rmd"),conflicts = "overwrite")

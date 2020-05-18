@@ -46,7 +46,7 @@ I’ve put the files on the open science framework:
 
 You can either download and extract yourself Or download the files from
 OSF by going to the link above, or use the package {osfr} created by
-[the many great people at Ropensci]()
+[the many great people at Ropensci](ropensci.org)
 
 ``` r
 library(osfr)
@@ -61,14 +61,13 @@ data_files <- osf_ls_files(project,path = "data")
 data_files
 ```
 
-    ## # A tibble: 5 x 3
+    ## # A tibble: 4 x 3
     ##   name          id                       meta            
     ##   <chr>         <chr>                    <list>          
-    ## 1 data_clean    5ec2d790edc58c002d0aadef <named list [3]>
-    ## 2 data_raw      5ec2d792edc58c002d0aadf5 <named list [3]>
-    ## 3 scihub.fst    5ec2da85edc58c002d0ab12f <named list [3]>
-    ## 4 scihub.rds    5ec2db72c7d4ab002621caa1 <named list [3]>
-    ## 5 scihub.sqlite 5ec2dc5aedc58c002e0ac261 <named list [3]>
+    ## 1 data_raw      5ec2d792edc58c002d0aadf5 <named list [3]>
+    ## 2 scihub.fst    5ec2da85edc58c002d0ab12f <named list [3]>
+    ## 3 scihub.rds    5ec2db72c7d4ab002621caa1 <named list [3]>
+    ## 4 scihub.sqlite 5ec2dc5aedc58c002e0ac261 <named list [3]>
 
 ``` r
 # download the fst format
