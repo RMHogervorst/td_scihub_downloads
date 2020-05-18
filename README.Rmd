@@ -1,0 +1,90 @@
+---
+title: "Scihub downloads"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is a data set of sci-hub. A log of pdf downloads from sci-hub between 22 September 2011 and 14 October 2013.
+Posted by Alexandra Elbakyan, founder of sci-hub. 
+
+
+Sci-hub allows users to download PDF versions of scholarly articles, including many articles that are paywalled at their journal’s site. It is a very simple website with a simple ui, you paste the
+DOI (Digital object identifyer) and if they have that pdf available you can download it.
+If not they try to download it, using borrowed credentials. Strictly speaking, Sci-hub is
+illegal. They are providing 'pirated' content outside of the monopolies of the publishers.
+
+
+From the readme:
+```
+contains raw unprocessed PDF download
+log from Sci-Hub starting from 22 September 2011 and ending on 14 October 2013.
+Statistics from 14 October to 18 Jan 2014 were not recorded for technical reasons.
+Statistics before 22 September were not collected.
+
+Each PDF download is recorded on separate line in following format:
+Time-and-Date	DOI	URL	IP-address	User-ID	Country
+
+I do not remember the time zone, and it changes multiple
+times in this log because the server location was changing. You can assume GMT+3 or
+close to it. The first three parts of the IP address are unmasked; since these are
+stats that were collected several years ago, there is no way it can harm the user,
+but it can be interesting for research purposes.
+```
+
+Source file is found at <http://sci-hub.se/downloads/ancient.sci-hub.stats.7z> or <https://t.co/7LW7Xs3heB?amp=1>
+It is a massive dataset of 4.728.537 rows. 
+earliest date found is: 2011-09-22 22:29:24 and latest 2013-10-14 00:46:22.
+
+I've added the files as rds, fst and sqlite database file.
+Because github is not a file storage, there is a limit and it probably doesn't like uploading 800mb files.
+
+I've put the files on the open science framework: <https://osf.io/cphtu/>       
+
+
+```{r}
+library(DBI)
+library(tidyverse)
+library(dbplyr)
+```
+
+
+
+```{r}
+con <- DBI::dbConnect(RSQLite::SQLite(), "data/scihub.sqlite")
+tbl_scihub <- tbl(con, "scihub")
+```
+
+Top DOI
+```{r}
+tbl_scihub %>% count(DOI, sort=TRUE) %>% head(10) %>% collect()
+```
+
+
+```{r}
+tbl_scihub %>% count(country, sort=TRUE) %>% head(10) %>% collect()
+```
+
+Are there super download users?
+
+```{r}
+tbl_scihub %>% count(userid, sort=TRUE) %>% head(10) %>% collect()
+```
+
+
+
+
+
+
+
+```{r}
+# clean up
+DBI::dbDisconnect(con)
+```
+
+
+Other links
+
+* <https://greenelab.github.io/scihub-manuscript/> tells us that "as of March 2017, Sci-Hub’s database contains 68.9% of the 81.6 million scholarly articles registered with Crossref and 85.1% of articles published in toll access journals".
